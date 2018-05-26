@@ -10,14 +10,14 @@ socket.on('disconnect', () => {
 
 socket.on('newMessage', (message) => {
   console.warn('new message', message);
-  let li = jQuery('<li></li>');
+  let li = jQuery('<li class="collection-item"></li>');
   li.text(`${message.from} --> ${message.text}`);
   jQuery('#messages').append(li);
 });
 
 socket.on('newLocationMessage', (message) => {
   console.warn('new location message', message);
-  let li = jQuery('<li></li>');
+  let li = jQuery('<li class="collection-item"></li>');
   let a = jQuery('<a target="blank">Here I am!</a>');
   li.text(`${message.from} --> `);
   a.attr('href', message.url);
@@ -28,11 +28,12 @@ socket.on('newLocationMessage', (message) => {
 
 jQuery('#message-form').on('submit', (e) => {
   e.preventDefault();
+  let textField = jQuery('[name=message]');
   socket.emit('createMessage', {
     from: 'User',
-    text: jQuery('[name=message]').val()
+    text: textField.val()
   }, () => {
-
+    textField.val('')
   });
 });
 
@@ -42,12 +43,16 @@ locationButton.on('click', () => {
     return alert('Location not supported by your browser :S');
   }
 
+  locationButton.attr('disabled','disabled');
+
   navigator.geolocation.getCurrentPosition((location) => {
+    locationButton.removeAttr('disabled');
     socket.emit('createLocationMessage', {
       lat: location.coords.latitude,
       lon: location.coords.longitude
     });
   }, () => {
+    locationButton.removeAttr('disabled');
     alert('Cant fetch location :(');
   });
 
