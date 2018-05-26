@@ -9,20 +9,30 @@ socket.on('disconnect', () => {
 });
 
 socket.on('newMessage', (message) => {
-  console.warn('new message', message);
-  let li = jQuery('<li class="collection-item"></li>');
-  li.text(`${moment(message.createdAt).format('H:mm')} - ${message.from} --> ${message.text}`);
-  jQuery('#messages').append(li);
+
+  let template = jQuery('#message-template').html();
+
+  let html = Mustache.render(template, {
+    text: message.text,
+    from: message.from,
+    createdAt: moment(message.createdAt).format('H:mm')
+  });
+
+  jQuery('#messages').append(html);
+
 });
 
 socket.on('newLocationMessage', (message) => {
-  console.warn('new location message', message);
-  let li = jQuery('<li class="collection-item"></li>');
-  let a = jQuery('<a target="blank">Here I am!</a>');
-  li.text(`${moment(message.createdAt).format('H:mm')} - ${message.from} --> `);
-  a.attr('href', message.url);
-  li.append(a);
-  jQuery('#messages').append(li);
+
+  let template = jQuery('#location-message-template').html();
+
+  let html = Mustache.render(template, {
+    from: message.from,
+    url: message.url,
+    createdAt: moment(message.createdAt).format('H:mm')
+  });
+
+  jQuery('#messages').append(html);
 });
 
 
@@ -43,7 +53,7 @@ locationButton.on('click', () => {
     return alert('Location not supported by your browser :S');
   }
 
-  locationButton.attr('disabled','disabled');
+  locationButton.attr('disabled', 'disabled');
 
   navigator.geolocation.getCurrentPosition((location) => {
     locationButton.removeAttr('disabled');
