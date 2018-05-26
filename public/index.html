@@ -2,23 +2,31 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
 </head>
 <body>
-<h3>kedise loco</h3>
-<p>Chat app</p>
+<div class="container">
+
+    <h3>Slock!</h3>
 
 
-<ol id="messages"></ol>
+    <ol id="messages"></ol>
 
 
-<form id="message-form">
-    <input name="message" type="text" placeholder="-- message --"/>
-    <button>Send !!</button>
-</form>
-
+    <form id="message-form">
+        <input name="message" type="text" placeholder="-- message --"/>
+        <button class="waves-effect waves-light btn">Send !!</button>
+    </form>
+    <br>
+    <button id="send-location" class="waves-effect waves-light btn">Send location</button>
+</div>
 
 <script src="socket.io/socket.io.js"></script>
 <script src="js/libs/jquery-3.3.1.min.js"></script>
 <script src="js/index.js"></script>
+<script type="text/javascript" src="js/libs/materialize.min.js"></script>
 </body>
 </html>
