@@ -11,27 +11,25 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
+const {generateMessage} = require('./utils/message');
+
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   console.log('new user connected');
 
-  socket.emit('newMessage', {
-    from: 'kediseloco@ke.dise',
-    text: 'cries in nodejs',
-    createdAt: 123123
-  });
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome'));
 
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
   socket.on('createMessage', (message) => {
-    console.log('createEmail', message);
+    io.emit('newMessage', generateMessage(message.from, message.text));
+    console.log(message);
   });
 
   socket.on('disconnect', () => {
     console.warn('User disconnected');
   });
-
-
 
 });
 
