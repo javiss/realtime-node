@@ -17,6 +17,10 @@ main {
     padding: 0;
     margin: 0;
 }
+#messages{
+    height: calc(100vh - 250px);
+
+}
 
 .footer-container, .footer-row, .footer-sidebar {
     padding: 0;

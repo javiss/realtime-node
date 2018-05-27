@@ -1,86 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>Join | Slock!</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="css/custom.css" media="screen,projection"/>
 </head>
 <body>
-<main>
-    <div class="row app">
-        <div class="col s2 sidebar">
-            <br>
-            <h4 class="white-text">People</h4>
-        </div>
-        <div class="col s10">
-            <h3 class="center-align">Slock!</h3>
-            <ul id="messages"></ul>
-        </div>
-    </div>
-</main>
-<footer class="page-footer footer-container grey darken-1">
-    <div class="row footer-row">
-        <div class="col s2 footer-sidebar">
-        </div>
-        <div class="col s10">
-            <form id="message-form">
-                <div class="col s12">
-                    <input
-                        class="textField"
-                        name="message"
-                        type="text"
-                        placeholder="-- message --"
-                        autocomplete="off"
-                        autofocus
-                        required
-                    />
-                </div>
-                <div class="col s6">
-                    <button class="waves-effect waves-light btn" style="width: 100%">Send message</button>
-                </div>
-            </form>
-            <div class="col s6">
-                <button id="send-location" class="waves-effect waves-light btn" style="width: 100%">Send location
-                </button>
-            </div>
-        </div>
-    </div>
-</footer>
+<br>
+<br>
 
-<script id="message-template" type="text/template">
-    <div class="">
-        <div class="row" style="padding: 0;margin: 0">
-            <div class="col s3 teal-text darken-1">
-                <div class="row right-align" style="padding: 0;margin: 0"><strong>{{from}}</strong></div>
-                <div class="row right-align" style="padding: 0;margin: 0">{{createdAt}}</div>
-            </div>
-            <div class="col s9 grey-text darken-1">
-                {{text}}
+<div class="row">
+    <h3 class="center-align">Slock!</h3>
+    <div class="col s4">
+    </div>
+    <form class="col s4" action="chat.html">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="username-input" name="username" placeholder="username" type="text" class="validate" autofocus>
             </div>
         </div>
-    </div>
-</script>
-
-<script id="location-message-template" type="text/template">
-    <div class="">
-        <div class="row" style="padding: 0;margin: 0">
-            <div class="col s3 teal-text darken-1">
-                <div class="row right-align" style="padding: 0;margin: 0"><strong>{{from}}</strong></div>
-                <div class="row right-align" style="padding: 0;margin: 0">{{createdAt}}</div>
-            </div>
-            <div class="col s9 grey-text darken-1">
-                <a href="{{url}}" target="_blank">Here I am !!</a>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="room-name-input" name="room" placeholder="Room name (use z)" type="text" class="validate">
             </div>
         </div>
+        <button class="waves-effect waves-light btn btn-large" style="width: 100%" value="Join !">Join !</button>
+    </form>
+    <div class="col s4">
     </div>
-</script>
+</div>
 
 <script src="js/libs/socket.io.slim.js"></script>
 <script src="js/libs/mustache.min.js"></script>
 <script src="js/libs/moment.js"></script>
 <script src="js/libs/jquery-3.3.1.min.js"></script>
-<script src="js/index.js"></script>
+<script src="js/libs/deparam.js"></script>
 <script type="text/javascript" src="js/libs/materialize.min.js"></script>
+
 </body>
 </html>

@@ -1,8 +1,29 @@
 const socket = io();
 
 socket.on('connect', () => {
-  console.warn('Connected');
+  let params = jQuery.deparam(window.location.search);
+
+  socket.emit('join', params, (err) => {
+    if (err) {
+      alert(err);
+      window.location.href = '/';
+    }
+    console.log('No error');
+  });
 });
+
+socket.on('updateUsersList', (users) => {
+  console.log(users);
+
+  let ol = jQuery('<ul></ul>');
+  users.forEach((user) => {
+    ol.append(jQuery('<li></li>').text(user));
+  });
+
+  jQuery('#userList').html(ol);
+
+});
+
 
 socket.on('disconnect', () => {
   console.warn('Disconnected');
@@ -18,7 +39,7 @@ socket.on('newMessage', (message) => {
     createdAt: moment(message.createdAt).format('H:mm')
   });
 
-  jQuery('#messages').append(html);
+  jQuery('#messages').prepend(html);
 
 });
 
@@ -32,7 +53,7 @@ socket.on('newLocationMessage', (message) => {
     createdAt: moment(message.createdAt).format('H:mm')
   });
 
-  jQuery('#messages').append(html);
+  jQuery('#messages').prepend(html);
 });
 
 
@@ -40,7 +61,6 @@ jQuery('#message-form').on('submit', (e) => {
   e.preventDefault();
   let textField = jQuery('[name=message]');
   socket.emit('createMessage', {
-    from: 'User',
     text: textField.val()
   }, () => {
     textField.val('')
