@@ -32,8 +32,8 @@ io.on('connection', (socket) => {
     users.addUser(socket.id, params.username, params.room);
 
 
-    socket.emit('newMessage', generateMessage('Admin', 'Welcome'));
-    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.username} joined !`));
+    socket.emit('newMessage', generateMessage('** Admin **', `Welcome to channel ${params.room}`));
+    socket.broadcast.to(params.room).emit('newMessage', generateMessage('** Admin **', `${params.username} joined !`));
     io.to(params.room).emit(('updateUsersList'), users.getUserList(params.room));
     callback();
   });
@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
     let user = users.removeUser(socket.id);
     if (user) {
       io.to(user.room).emit('updateUsersList', users.getUserList(user.room));
-      io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} left :(`));
+      io.to(user.room).emit('newMessage', generateMessage('** Admin **', `${user.name} left :(`));
     }
     console.warn('User disconnected');
   });
